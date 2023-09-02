@@ -1,0 +1,30 @@
+<div class="backdrop"></div>
+<header class="main-header">
+    <button id="side-menu-toggle">Menu</button>
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a class="<%= path === '/' ? 'active' : '' %>" href="/">Dashboard</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/add-card' ? 'active' : '' %>" href="/add-card">Add Card</a>
+            </li>
+        </ul>
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">Login</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<nav class="mobile-nav">
+        <ul class="mobile-nav__item-list">
+                <li class="mobile-nav__item">
+                    <a class="<%= path === '/' ? 'active' : '' %>" href="/">Dashboard</a>
+                </li>
+                <li class="mobile-nav__item">
+                    <a class="<%= path === '/add-card' ? 'active' : '' %>" href="/">Add Card</a>
+                </li>
+            </ul>
+</nav>

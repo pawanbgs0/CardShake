@@ -1,0 +1,39 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/card.css">
+    </head>
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+            <main>
+                <% if (cards.length > 0) { %>
+                    <div class="grid">
+                        <% for (let card of cards) { %>
+                            <article class="card product-item">
+                                <header class="card__header">
+                                    <h1 class="product__title">
+                                        <%= card.name %>
+                                    </h1>
+                                </header>
+                                <div class="card__image">
+                                    <img src="<%= card.imageUrl %>" alt="<%= card.name %>">
+                                </div>
+                                <div class="card__content">
+                                    <h2 class="product__price">📲 
+                                        <%= card.phone %>
+                                    </h2>
+                                    <p class="product__description">
+                                        <%= card.address %>
+                                    </p>
+                                </div>
+                                <div class="card__actions">
+                                    <a href="/cards/<%= card.id %>" class="btn">Details</a>
+                                    <a href="/edit-card/<%= card.id %>?edit=true" class="btn">Edit</a>
+                                </div>
+                            </article>
+                            <% } %>
+                    </div>
+                    <% } else { %>
+                        <h1>No Cards Found!</h1>
+                        <% } %>
+            </main>
+            <%- include('../includes/end.ejs') %>
