@@ -2,18 +2,41 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 
 exports.getLogin = (req, res, next) => {
+  let message = req.flash('error');
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
+
+  let successMessage = req.flash('success');
+  if (successMessage.length > 0) {
+    successMessage = successMessage[0];
+  } else {
+    successMessage = null;
+  }
+
   res.render('auth/login', {
     path: '/login',
     pageTitle: 'Login',
-    isAuthenticated: false
+    isAuthenticated: false,
+    errorMessage: message,
+    seccessMessage: successMessage
   });
 };
 
 exports.getSignup = (req, res, next) => {
+  let message = req.flash('error');
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
   res.render('auth/signup', {
     path: '/signup',
     pageTitle: 'Signup',
-    isAuthenticated: false
+    isAuthenticated: false,
+    errorMessage: message
   });
 };
 
@@ -24,7 +47,7 @@ exports.postLogin = (req, res, next) => {
   const existingUser = User.findUser(email);
 
   if (existingUser === undefined){
-    console.log('user doesn\'t exists');
+    req.flash('error', 'Invalid email.');
     return res.redirect('/login');
   }
   // console.log(password, existingUser.password);
@@ -42,11 +65,12 @@ exports.postLogin = (req, res, next) => {
           res.redirect('/');
         });
       }
-      console.log('Invalid password');
+      req.flash('error', 'Invalid Password.');
       res.redirect('/login');
     })
     .catch(err => {
       console.log(err);
+      req.flash('error', 'Invalid email or password.');
       res.redirect('/login');
     });
 };
@@ -79,21 +103,25 @@ exports.postSignup = (req, res, next) => {
           }
 
           if (!passwordMatch) {
+            req.flash('error', 'Password didn\'t matched.');
             return res.redirect('/signup'); // Redirect here if password didn't match
           }
 
           // Create a new user with the hashed password
           const user = new User(email, hashedPassword);
           user.save();
+          req.flash('success', 'Registration successful!');
           res.redirect('/login');
         })
         .catch((err) => {
           console.log(err);
+          req.flash('error', 'Invalid Request.');
           res.redirect('/login');
         });
     })
     .catch((err) => {
       console.log(err);
+      req.flash('error', 'Invalid Request.');
       res.redirect('/');
     });
 };

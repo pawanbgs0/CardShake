@@ -3,6 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const User = require('./models/user');
 const csrf = require('csurf');
+const flash = require('connect-flash');
 
 const errorController = require('./controllers/error');
 
@@ -24,6 +25,7 @@ app.use(
 );
 
 app.use(csrfProtection); // the position should be after sessions/cookies
+app.use(flash()); // the position should be after session and csrf
 
 // Custom middleware for handling session user data
 app.use((req, res, next) => {
