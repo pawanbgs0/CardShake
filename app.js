@@ -40,9 +40,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 const dashRoutes = require('./routes/dashboard');
 const authRoutes = require('./routes/auth');
+const adminRoutes = require('./routes/admin');
 
 app.use('/', dashRoutes);
 app.use(authRoutes);
+app.use(adminRoutes);
 
 // Error handling middleware
 app.use(errorController.get404);

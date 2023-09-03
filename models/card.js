@@ -40,4 +40,19 @@ module.exports = class Card{
             }
         }
     }
+
+    static findIndex(id) {
+        for (let i = 0; i < allCards.length; i++) {
+            if (allCards[i].id == id) {
+                return i;
+            }
+            return -1;
+        }
+    }
+
+    static deleteByIndex(index) {
+        if (index !== -1) {
+            allCards.splice(index, 1)
+        }
+    }
 };
