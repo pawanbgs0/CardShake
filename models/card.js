@@ -41,14 +41,18 @@ module.exports = class Card{
         }
     }
 
-    static findIndex(id) {
+    static findIndex(cardId) {
+        // Convert cardId to a number (if it's a string)
+        cardId = Number(cardId);
+      
         for (let i = 0; i < allCards.length; i++) {
-            if (allCards[i].id === id) {
-                return i;
-            }
-            return -1;
+          if (allCards[i].id === cardId) {
+            return i;
+          }
         }
-    }
+        return -1;
+      }
+      
 
     static deleteByIndex(index) {
         if (index !== -1) {

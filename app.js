@@ -23,7 +23,7 @@ app.use(
   })
 );
 
-app.use(csrfProtection);
+app.use(csrfProtection); // the position should be after sessions/cookies
 
 // Custom middleware for handling session user data
 app.use((req, res, next) => {
@@ -61,6 +61,6 @@ app.use(adminRoutes);
 
 // Error handling middleware
 app.use(errorController.get404);
-app.use(errorController.get500);
+app.use(errorController.csrfError);
 
 app.listen(3000);

@@ -85,6 +85,7 @@ exports.postDeleteCard = (req, res, next) => {
     const cardId = req.body.cardId;
     const index = Card.findIndex(cardId);
     console.log(index, cardId);
+
     Card.deleteByIndex(index);
     
     res.redirect('/admin/cards');
