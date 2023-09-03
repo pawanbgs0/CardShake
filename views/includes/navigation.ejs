@@ -9,6 +9,11 @@
             <li class="main-header__item">
                 <a class="<%= path === '/add-card' ? 'active' : '' %>" href="/add-card">Add Card</a>
             </li>
+            <% if (isAuthenticated) { %>
+                <li class="main-header__item">
+                    <a class="<%= path === '/admin' ? 'active' : '' %>" href="/admin">Admin Cards</a>
+                </li>
+            <% } %>
         </ul>
         <ul class="main-header__item-list">
             <% if (!isAuthenticated) { %>
