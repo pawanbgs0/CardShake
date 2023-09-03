@@ -2,19 +2,24 @@ const Card = require('../models/card');
 let id = 620;
 
 exports.getCards = (req, res, next) => {
+    const isLoggedIn = req.session.isLoggedIn || false;
     const allCards = Card.fetchAll()
+    // console.log(isLoggedIn);
     res.render('cards/dashboard', {
         cards: allCards,
         pageTitle: "Dashboard",
-        path: '/'
+        path: '/',
+        isAuthenticated: isLoggedIn
     });
 };
 
 exports.getAddCard = (req, res, next) => {
+    const isLoggedIn = req.session.isLoggedIn || false;
     res.render('cards/add-card', {
         pageTitle: 'Add Card',
         path: '/cards/add-card',
-        editing: false
+        editing: false,
+        isAuthenticated: isLoggedIn
     });
 }
 
@@ -40,11 +45,13 @@ exports.getEditCard = (req, res, next) => {
         return res.redirect('/');
     }
 
+    const isLoggedIn = req.session.isLoggedIn || false;
     res.render('cards/add-card', {
         pageTitle: 'Edit Card',
         path: '/cards/edit-card',
         editing: editMode,
-        card: card
+        card: card,
+        isAuthenticated: isLoggedIn
     });
 }
 
@@ -64,10 +71,12 @@ exports.postEditCard = (req, res, next) => {
     card.address = req.body.address;
 
     card.save();
+    const isLoggedIn = req.session.isLoggedIn || false;
     res.render('cards/card-detail', {
         card: card,
         pageTitle: card.name,
-        path: '/products'
+        path: '/products',
+        isAuthenticated: isLoggedIn
       });
 }
 
@@ -78,10 +87,11 @@ exports.getCardDetails = (req, res, next) => {
     if (!card) {
         return res.redirect('/');
     }
-
+    const isLoggedIn = req.session.isLoggedIn || false;
     res.render('cards/card-detail', {
         card: card,
         pageTitle: card.name,
-        path: '/products'
+        path: '/products',
+        isAuthenticated: isLoggedIn
       });
 }
