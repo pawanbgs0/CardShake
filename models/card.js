@@ -1,8 +1,9 @@
 const allCards = [];
 
 module.exports = class Card{
-    constructor(id, name, imageUrl, phone, address) {
+    constructor(id, userEmail, name, imageUrl, phone, address) {
         this.id = id;
+        this.userEmail = userEmail;
         this.imageUrl = imageUrl;
         this.name = name;
         this.phone = phone;

@@ -4,9 +4,12 @@ let id = 620;
 exports.getCards = (req, res, next) => {
     const isLoggedIn = req.session.isLoggedIn || false;
     const allCards = Card.fetchAll()
-    // console.log(isLoggedIn);
+    const userEmail = req.session.user.email;
+    const userCards = allCards.filter((card) => card.userEmail === userEmail);
+    // console.log(userEmail);
+    // console.log(userCards);
     res.render('cards/admin-cards', {
-        cards: allCards,
+        cards: userCards,
         pageTitle: "Admin Cards",
         path: '/admin-cards',
         isAuthenticated: isLoggedIn
@@ -28,7 +31,9 @@ exports.postAddCard = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const phone = req.body.phone;
     const address = req.body.address;
-    const card = new Card(id++, name, imageUrl, phone, address);
+    const userEmail = req.session.user.email;
+
+    const card = new Card(id++, userEmail, name, imageUrl, phone, address);
     card.save();
     // console.log(card);
     res.redirect('/');

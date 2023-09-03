@@ -63,6 +63,6 @@ app.use(adminRoutes);
 
 // Error handling middleware
 app.use(errorController.get404);
-app.use(errorController.csrfError);
+// app.use(errorController.csrfError);
 
 app.listen(3000);
