@@ -1,6 +1,19 @@
 const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 
+const nodemailer = require('nodemailer');
+const config = require('./../../.config');
+
+const transporter = nodemailer.createTransport({
+  host: 'smtp-relay.sendinblue.com',
+  port: 587,
+  secure: false,
+  auth: {
+    user: config.brevo.email,
+    pass: config.brevo.password,
+  },
+});
+
 exports.getLogin = (req, res, next) => {
   let message = req.flash('error');
   if (message.length > 0) {
@@ -112,6 +125,13 @@ exports.postSignup = (req, res, next) => {
           user.save();
           req.flash('success', 'Registration successful!');
           res.redirect('/login');
+          return transporter.sendMail({
+            from: 'support@cardshake.com',
+            to: email,
+            subject: 'Congratulations!',
+            // text: 'Hello',
+            html: '<h1>Congratulations on signing up with CardShake!</h1>',
+          })
         })
         .catch((err) => {
           console.log(err);
