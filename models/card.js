@@ -43,7 +43,7 @@ module.exports = class Card{
 
     static findIndex(id) {
         for (let i = 0; i < allCards.length; i++) {
-            if (allCards[i].id == id) {
+            if (allCards[i].id === id) {
                 return i;
             }
             return -1;

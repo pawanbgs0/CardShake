@@ -2,15 +2,18 @@ const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const User = require('./models/user');
+const csrf = require('csurf');
 
 const errorController = require('./controllers/error');
 
 const app = express();
 const bodyParser = require('body-parser');
+const csrfProtection = csrf();
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
+app.use(express.urlencoded({ extended: true }));
 // Session middleware should be defined before other middlewares and routes
 app.use(
   session({
@@ -19,6 +22,8 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+app.use(csrfProtection);
 
 // Custom middleware for handling session user data
 app.use((req, res, next) => {
@@ -31,6 +36,14 @@ app.use((req, res, next) => {
     console.log('User doesn\'t exist');
     req.user = req.session.user;
   }
+  next();
+});
+
+
+// local variable calls
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
   next();
 });
 
